@@ -1,0 +1,78 @@
+def gerar_ata():
+    # Mensagem de boas-vindas
+    print("Bem-vindo ao gerador automático de atas de reunião!")
+    print("Você será guiado por uma série de perguntas para coletarmos todas as informações necessárias.")
+    print("Ao final, uma ata completa será gerada automaticamente para você copiar e colar no documento desejado.")
+    print("Vamos começar!\n")
+    
+    # Perguntas principais
+    dia = input("Qual o dia? ")
+    mes = input("Qual o mês? ")
+    ano = input("Qual o ano? ")
+    curso = input("Qual o curso? ")
+    numero_ata = input("Qual o número da ata? ")
+    professores_presentes = input("Quais professores estavam presentes? ")
+    coordenador = input("Quem é o coordenador? ")
+    secretario = input("Quem secretariou a reunião? ")
+    
+    # Pergunta sobre a hora e minutos da reunião
+    hora = input("Qual hora? ")
+    minutos = input("Quantos minutos? ")
+
+    # Pergunta de temas com repetição
+    temas = []
+    while True:
+        tema = input("Qual o tema da reunião? ")
+        temas.append(tema)
+        mais_temas = input("Existem mais temas? (Sim ou Não) ").strip().lower()
+        if mais_temas != "sim":
+            break
+
+    # Pergunta de ACCs com condicionais
+    accs_aprovacao = input("Tem ACCs para aprovação? (Sim ou Não) ").strip().lower()
+    accs_detalhes = []
+    if accs_aprovacao == "sim":
+        while True:
+            matriz = input("Qual a Matriz? ")
+            estudante = input("Qual o nome do(a) estudante? ")
+            matricula = input("Qual o número da matrícula? ")
+            horas = input("Quantas horas foram deferidas? ")
+            accs_detalhes.append({
+                "matriz": matriz,
+                "estudante": estudante,
+                "matricula": matricula,
+                "horas": horas
+            })
+            mais_estudantes = input("Existem mais estudantes? (Sim ou Não) ").strip().lower()
+            if mais_estudantes != "sim":
+                break
+
+    # Gerar a ata preenchida em texto corrido
+    ata = f"Aos {dia} dias do mês de {mes} de {ano}, a partir das {hora} horas e {minutos} minutos, " \
+          f"reuniram-se, por videoconferência on-line, os membros do Colegiado do Curso de {curso} da " \
+          f"Universidade do Oeste de Santa Catarina/Campus Joaçaba para tratar dos assuntos em pauta na " \
+          f"convocação {numero_ata}/Colegiado/{curso}/{ano}. Estavam presentes os professores {professores_presentes}. " \
+          f"O professor {coordenador}, coordenador do curso saudou a todos e deu início à reunião, onde passou a explanar " \
+          f"sobre os seguintes temas: "
+
+    ata += "; ".join(temas) + "."
+
+    if accs_aprovacao == "sim":
+        accs_texto = " Foram aprovadas Atividades Curriculares Complementares (ACCs) para os seguintes estudantes: "
+        accs_lista = []
+        for acc in accs_detalhes:
+            accs_lista.append(f"{acc['matriz']}: {acc['estudante']}, matrícula nº {acc['matricula']} teve deferimento de " \
+                              f"{acc['horas']} horas em participação em eventos (curso, palestra e seminários); cumprindo " \
+                              f"totalmente/parcialmente os componentes de Atividades Curriculares Complementares da matriz curricular.")
+        ata += accs_texto + "; ".join(accs_lista) + "."
+
+    ata += f" Nada mais havendo a tratar, deu-se por encerrada a reunião e, para registro das decisões, lavrou-se a " \
+           f"presente ata que será submetida à aprovação dos membros presentes e assinada pelo coordenador de curso e " \
+           f"pelo secretário do curso, atestando a presença dos demais. Reunião secretariada por {secretario}."
+
+    # Imprime a ata
+    print("\n--- Ata Gerada ---\n")
+    print(ata)
+
+# Chama a função para iniciar o processo
+gerar_ata()
